@@ -360,6 +360,18 @@ fn compile(
         .or_else(|_| backends::shaderc::compile(src, path, cfg))
 }
 
+pub fn runtime_compile(
+    src: &str,
+    path: Option<&str>,
+    cfg: &ShaderCompilationConfig,
+) -> Result<Vec<u32>, String> {
+    Match backends::naga::compile(src, path, cfg)
+        .or_else(|_| backends::shaderc::compile(src, path, cfg)){
+        Ok(feedback) => Ok(feedback.spv)
+        Err(error) => Err(error),
+    }
+}
+
 impl Parse for IncludedShaderSource {
     fn parse(mut input: ParseStream) -> ParseResult<Self> {
         let path_lit = input.parse::<LitStr>()?;
