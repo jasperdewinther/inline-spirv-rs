@@ -1,5 +1,5 @@
 [package]
-name = "inline-spirv"
+name = "inline-spirv-runtime"
 version = "0.1.4"
 authors = ["PENGUINLIONG <admin@penguinliong.moe>", "Daniel Parnell <me@danielparnell.com>"]
 edition = "2018"
@@ -10,9 +10,6 @@ readme = "README.md"
 documentation = "https://docs.rs/inline-spirv-rs"
 homepage = "https://github.com/PENGUINLIONG/inline-spirv-rs"
 categories = ["graphics"]
-
-[lib]
-proc-macro = true
 
 [features]
 default = ["glsl", "hlsl"]
