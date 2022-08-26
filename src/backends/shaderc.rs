@@ -67,7 +67,7 @@ pub(crate) fn compile(src: &str, path: Option<&str>, cfg: &ShaderCompilationConf
         };
 
         let path_lit = path.to_string_lossy().to_string();
-        let content = std::fs::read_to_string(path).map_err(|e| format!("cannot read from \"{}\": {}", path_lit, e.to_string()))?;
+        let content = std::fs::read_to_string(path).map_err(|e| format!("cannot read from \"{}\": {}", path_lit, e))?;
         let incl = ResolvedInclude {
             resolved_name: path_lit,
             content,
@@ -75,7 +75,7 @@ pub(crate) fn compile(src: &str, path: Option<&str>, cfg: &ShaderCompilationConf
         Ok(incl)
     });
     for (k, v) in cfg.defs.iter() {
-        opt.add_macro_definition(&k, v.as_ref().map(|x| x.as_ref()));
+        opt.add_macro_definition(k, v.as_ref().map(|x| x.as_ref()));
     }
     if cfg.debug {
         opt.set_generate_debug_info();
@@ -84,7 +84,7 @@ pub(crate) fn compile(src: &str, path: Option<&str>, cfg: &ShaderCompilationConf
     let mut compiler = shaderc::Compiler::new().unwrap();
     let path = if let Some(path) = path { path } else { "<inline>" };
     let out = compiler
-        .compile_into_spirv(src, shader_kind, &path, &cfg.entry, Some(&opt))
+        .compile_into_spirv(src, shader_kind, path, &cfg.entry, Some(&opt))
         .map_err(|e| e.to_string())?;
     if out.get_num_warnings() != 0 {
         return Err(out.get_warning_messages());
