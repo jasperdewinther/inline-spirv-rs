@@ -72,7 +72,7 @@ impl Default for ShaderCompilationConfig {
             spv_ver: TargetSpirvVersion::Spirv1_5,
             env_ty: TargetEnvironmentType::Vulkan,
             entry: "main".to_owned(),
-            optim_lv: OptimizationLevel::MaxPerformance,
+            optim_lv: OptimizationLevel::None,
             debug: false,
             kind: ShaderKind::Unknown,
             auto_bind: false,
